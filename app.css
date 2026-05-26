@@ -974,3 +974,162 @@ a { color: inherit; }
   .gloss-body { padding-left: 16px; padding-right: 16px; }
   .gloss-nav { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
 }
+
+/* ============== Inline term references ============== */
+.term-ref {
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0 1px;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: underline dotted var(--accent-deep);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  border-radius: 3px;
+  transition: background 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.term-ref:active { background: var(--accent); }
+@media (hover: hover) {
+  .term-ref:hover { background: color-mix(in srgb, var(--accent) 40%, transparent); }
+}
+
+/* ============== Term definition sheet ============== */
+body.sheet-open { overflow: hidden; }
+
+.term-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+.term-sheet[hidden] { display: none; }
+
+.term-sheet-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 15, 0.28);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.term-sheet.is-open .term-sheet-scrim { opacity: 1; }
+
+.term-sheet-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--surface);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: 14px 22px calc(24px + var(--safe-b));
+  box-shadow: var(--shadow-2);
+  transform: translateY(100%);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  max-width: 640px;
+  margin: 0 auto;
+}
+.term-sheet.is-open .term-sheet-panel { transform: translateY(0); }
+
+.term-sheet-grip {
+  display: block;
+  width: 38px;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--line-2);
+  margin: 0 auto 14px;
+}
+
+.term-sheet-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  color: var(--ink-3);
+}
+
+.term-sheet-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  padding-right: 40px;
+  margin-bottom: 10px;
+}
+.term-sheet-ru {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.term-sheet-en {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+.term-sheet-def {
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.term-sheet-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent-deep);
+  text-decoration: none;
+}
+.term-sheet-link:active { opacity: 0.6; }
+
+/* ============== Court engine (DSL player) ============== */
+:root {
+  --court-ink: var(--ink);
+  --court-floor: var(--surface);
+  --court-line: var(--line-2);
+  --court-zone: var(--accent);
+  --court-zone-edge: var(--accent-deep);
+  --court-ball: var(--accent);
+  --shot-drive: #1A1A1A; --shot-cross: #4A6FA5; --shot-boast: #E07A1F;
+  --shot-drop: #5B9279;  --shot-lob: #9B6BD9;   --shot-volley: #1A1A1A; --shot-serve: #1A1A1A;
+}
+
+.court-label-side { font-size: 7px; fill: var(--ink-3); letter-spacing: 1px; font-family: var(--font-mono); }
+.court-ball { filter: drop-shadow(0 1px 1.5px rgba(20,20,15,.35)); }
+
+.court-stage { background: var(--surface); border-radius: var(--r-md); }
+.court-stage .court-svg { width: 100%; height: auto; display: block; }
+
+.court-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.court-btn {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.court-btn:active { transform: scale(0.93); }
+.court-play { background: var(--accent); border-color: var(--accent-deep); font-weight: 700; }
+.court-scrub { flex: 1; min-width: 0; accent-color: var(--accent-deep); height: 4px; }
+.court-steplabel {
+  flex: none;
+  max-width: 42%;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--ink-3);
+  text-align: right;
+}

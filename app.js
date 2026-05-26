@@ -5,7 +5,23 @@
   'use strict';
 
   const { renderCourt, renderLegend } = window.SquashCourt;
+  const { renderProse } = window.SquashTermLink;
+  const { mountCourt } = window.SquashCourtPlayer;
   const DRILLS = window.DRILLS;
+
+  let _courtPlayer = null; // активный плеер схемы (если дрилл на DSL)
+  function destroyCourt() {
+    if (_courtPlayer) { _courtPlayer.destroy(); _courtPlayer = null; }
+  }
+
+  // Glossary lookup for inline term references (см. CONTEXT.md «Ссылка на термин»)
+  let _glossaryById = null;
+  function lookupTerm(id) {
+    if (!_glossaryById) {
+      _glossaryById = new Map((window.GLOSSARY || []).map((t) => [t.id, t]));
+    }
+    return _glossaryById.get(id) || null;
+  }
 
   // ---------- State ----------
   const state = {
@@ -34,6 +50,10 @@
   const $glossNav   = document.getElementById('gloss-nav');
   const $glossCats  = document.getElementById('gloss-categories');
   const $glossCount = document.getElementById('gloss-count');
+  const $termSheet  = document.getElementById('term-sheet');
+  const $termRu     = document.getElementById('term-sheet-ru');
+  const $termEn     = document.getElementById('term-sheet-en');
+  const $termDef    = document.getElementById('term-sheet-def');
 
   // ---------- Storage helpers ----------
   function loadPref(key, fallback) {
@@ -144,8 +164,9 @@
 
       <section class="diagram-section">
         <div class="diagram-wrap">
-          ${renderCourt(drill.diagram || {})}
-          ${renderLegend(types)}
+          ${drill.scene
+            ? '<div class="court-mount"></div>'
+            : renderCourt(drill.diagram || {}) + renderLegend(types)}
         </div>
       </section>
 
@@ -159,7 +180,7 @@
       <section class="section">
         <h2 class="section-title">Описание</h2>
         <div class="section-prose">
-          <p>${escapeHtml(drill.description)}</p>
+          <p>${renderProse(drill.description, lookupTerm)}</p>
         </div>
       </section>
 
@@ -168,7 +189,7 @@
         <ol class="steps-list">
           ${drill.steps.map((s) => `
             <li class="step-item">
-              <span class="step-item-text">${escapeHtml(s)}</span>
+              <span class="step-item-text">${renderProse(s, lookupTerm)}</span>
             </li>
           `).join('')}
         </ol>
@@ -179,12 +200,19 @@
         <ul class="tips-list">
           ${drill.tips.map((t) => `
             <li class="tip-item">
-              <span class="tip-item-text">${escapeHtml(t)}</span>
+              <span class="tip-item-text">${renderProse(t, lookupTerm)}</span>
             </li>
           `).join('')}
         </ul>
       </section>
     `;
+
+    // mount the animated court if this drill is authored in the DSL
+    destroyCourt();
+    if (drill.scene) {
+      const mount = $detailBody.querySelector('.court-mount');
+      if (mount) _courtPlayer = mountCourt(mount, drill.scene, { controls: true });
+    }
 
     // reset timer UI for this drill
     stopTimer();
@@ -281,6 +309,43 @@
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[c]));
   }
+
+  // ---------- Term definition sheet ----------
+  function openTermSheet(id) {
+    const term = lookupTerm(id);
+    if (!term) return;
+    $termRu.textContent = term.ru;
+    $termEn.textContent = term.en;
+    $termDef.textContent = term.def;
+    $termSheet.hidden = false;
+    $termSheet.removeAttribute('hidden');
+    requestAnimationFrame(() => $termSheet.classList.add('is-open'));
+    document.body.classList.add('sheet-open');
+    if (navigator.vibrate) try { navigator.vibrate(8); } catch {}
+  }
+
+  function closeTermSheet() {
+    if ($termSheet.hidden) return;
+    $termSheet.classList.remove('is-open');
+    document.body.classList.remove('sheet-open');
+    setTimeout(() => {
+      $termSheet.hidden = true;
+      $termSheet.setAttribute('hidden', '');
+    }, 220);
+  }
+
+  // Open sheet when a term reference inside drill prose is tapped (event delegation)
+  $detailBody.addEventListener('click', (e) => {
+    const ref = e.target.closest('.term-ref');
+    if (ref) openTermSheet(ref.dataset.term);
+  });
+  $termSheet.addEventListener('click', (e) => {
+    if (e.target.closest('[data-close]')) closeTermSheet();
+  });
+  document.getElementById('term-sheet-all').addEventListener('click', closeTermSheet);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeTermSheet();
+  });
 
   // ---------- Timer ----------
   function parseDurationToSec(durationStr) {
@@ -393,6 +458,7 @@
     hideAllViews();
     $listView.hidden = false; $listView.removeAttribute('hidden');
     stopTimer();
+    destroyCourt();
     window.scrollTo(0, 0);
   }
 
@@ -407,6 +473,7 @@
     hideAllViews();
     $glossView.hidden = false; $glossView.removeAttribute('hidden');
     stopTimer();
+    destroyCourt();
     renderGlossary();
     window.scrollTo(0, 0);
   }

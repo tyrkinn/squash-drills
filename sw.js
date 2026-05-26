@@ -1,5 +1,5 @@
 // Squash Drills service worker — cache-first for shell, network-fallback
-const VERSION = 'sq-v1.1.0';
+const VERSION = 'sq-v1.3.0';
 const ASSETS = [
   './',
   'index.html',
@@ -7,7 +7,12 @@ const ASSETS = [
   'app.js',
   'drills.js',
   'court.js',
+  'court-geometry.js',
+  'court-render-svg.js',
+  'court-dsl.js',
+  'court-player.js',
   'glossary.js',
+  'term-link.js',
   'manifest.json',
   'icons/icon.svg',
   'icons/icon-192.png',

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Squash Court Engine — demo</title>
+  <style>
+    :root {
+      --bg: #FAFAF7; --surface: #FFF; --ink: #14140F; --ink-3: #8A8A80;
+      --line: #E5E2D8; --accent: #D9DB2A; --accent-deep: #B8BA1A;
+      /* court theming consumed by the renderer */
+      --court-ink: #14140F; --court-floor: #FFF; --court-line: #C9C6BA;
+      --court-zone: #D9DB2A; --court-zone-edge: #B8BA1A; --court-ball: #D9DB2A;
+      --shot-drive:#1A1A1A; --shot-cross:#4A6FA5; --shot-boast:#E07A1F;
+      --shot-drop:#5B9279; --shot-lob:#9B6BD9; --shot-volley:#1A1A1A; --shot-serve:#1A1A1A;
+    }
+    body { margin: 0; background: var(--bg); color: var(--ink);
+      font-family: system-ui, -apple-system, sans-serif; padding: 24px; }
+    h1 { font-size: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; max-width: 900px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+    .card h2 { font-size: 14px; margin: 0 0 10px; color: var(--ink-3); font-weight: 600; }
+
+    /* engine styles */
+    .court-svg { width: 100%; height: auto; display: block; }
+    .court-label-fw, .court-label-bw { font-size: 8px; fill: var(--ink-3); letter-spacing: 1px; font-weight: 600; }
+    .court-label-side { font-size: 7px; fill: var(--ink-3); letter-spacing: 1px; }
+    .court-zone-label { font-size: 8px; fill: var(--accent-deep); font-weight: 600; }
+    .court-step-label { font-size: 7px; font-weight: 700; }
+    .court-player-label { font-size: 9px; font-weight: 700; }
+    .court-ball { filter: drop-shadow(0 1px 1px rgba(0,0,0,.3)); }
+
+    .court-stage { background: var(--surface); border-radius: 10px; }
+    .court-controls { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+    .court-btn { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--line);
+      background: var(--surface); cursor: pointer; font-size: 13px; line-height: 1; }
+    .court-btn:active { transform: scale(.94); }
+    .court-play { background: var(--accent); border-color: var(--accent-deep); font-weight: 700; }
+    .court-scrub { flex: 1; accent-color: var(--accent-deep); }
+    .court-steplabel { font-size: 12px; color: var(--ink-3); min-width: 90px; text-align: right; }
+  </style>
+</head>
+<body>
+  <h1>Squash Court Engine — demo</h1>
+  <div class="grid">
+    <div class="card">
+      <h2>mountCourt() · Кооперативные прямые драйвы (исправлено: правая сторона)</h2>
+      <div id="m1"></div>
+    </div>
+    <div class="card">
+      <h2>&lt;squash-court&gt; · Бэст → драйв (соло-петля, непрерывный мяч)</h2>
+      <squash-court controls dsl="court full
+player A at [172,260]
+step &quot;Бэст — и сразу рывок к мячу&quot;
+  A boast [172,260] -> [196,120] -> [70,8] -> [27,46]
+  A move [172,260] -> [27,46]
+step &quot;Драйв в длину — и рывок назад&quot;
+  A drive [27,46] -> [26,8] -> [33,250]
+  A move [27,46] -> [33,250]
+step &quot;Снова бэст — и рывок вперёд&quot;
+  A boast [33,250] -> [6,120] -> [130,8] -> [173,46]
+  A move [33,250] -> [173,46]"></squash-court>
+    </div>
+  </div>
+
+  <script src="court-geometry.js?v=12"></script>
+  <script src="court-render-svg.js?v=12"></script>
+  <script src="court-dsl.js?v=12"></script>
+  <script src="court-player.js?v=12"></script>
+  <script>
+    const dsl1 = `court full
+player A at [172,212]
+player B at [172,258]
+step "A бьёт прямой драйв"
+  A drive [172,212] -> FW_R -> [172,258]
+step "B принимает и отвечает тем же"
+  B drive [172,258] -> FW_R -> [172,212]`;
+    SquashCourtPlayer.mountCourt(document.getElementById('m1'), dsl1, { controls: true });
+  </script>
+</body>
+</html>

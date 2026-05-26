@@ -171,11 +171,35 @@
         <div class="gloss-categories" id="gloss-categories"></div>
       </div>
     </main>
+
+    <!-- TERM DEFINITION SHEET -->
+    <div id="term-sheet" class="term-sheet" hidden>
+      <div class="term-sheet-scrim" data-close></div>
+      <div class="term-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="term-sheet-ru">
+        <span class="term-sheet-grip" aria-hidden="true"></span>
+        <button class="term-sheet-close icon-btn" data-close aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+        <div class="term-sheet-head">
+          <span class="term-sheet-ru" id="term-sheet-ru"></span>
+          <span class="term-sheet-en" id="term-sheet-en"></span>
+        </div>
+        <p class="term-sheet-def" id="term-sheet-def"></p>
+        <a class="term-sheet-link" id="term-sheet-all" href="#/glossary">Все термины →</a>
+      </div>
+    </div>
   </div>
 
   <script src="court.js"></script>
+  <script src="court-geometry.js"></script>
+  <script src="court-render-svg.js"></script>
+  <script src="court-dsl.js"></script>
+  <script src="court-player.js"></script>
   <script src="drills.js"></script>
   <script src="glossary.js"></script>
+  <script src="term-link.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
