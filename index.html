@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
+  <meta name="theme-color" content="#FAFAF7" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Squash Drills" />
+  <meta name="description" content="Библиотека упражнений по сквошу для соло и парных тренировок." />
+  <title>Squash Drills</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- LIST VIEW -->
+    <main id="view-list" class="view view-list" data-active="true">
+      <header class="masthead">
+        <div class="masthead-row">
+          <div class="masthead-brand">
+            <span class="masthead-dot" aria-hidden="true"></span>
+            <span class="masthead-kicker">Squash · Drills</span>
+          </div>
+          <div class="masthead-actions">
+            <button id="btn-glossary" class="icon-btn" aria-label="Словарь терминов" title="Словарь">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H6a2 2 0 0 0-2 2V4.5z"/>
+                <path d="M4 19.5A2 2 0 0 0 6 21h14"/>
+                <line x1="8" y1="8" x2="16" y2="8"/>
+                <line x1="8" y1="12" x2="14" y2="12"/>
+              </svg>
+            </button>
+            <button id="btn-random" class="icon-btn" aria-label="Случайное упражнение" title="Случайное">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <circle cx="8" cy="8" r="1.2" fill="currentColor"/>
+                <circle cx="16" cy="8" r="1.2" fill="currentColor"/>
+                <circle cx="8" cy="16" r="1.2" fill="currentColor"/>
+                <circle cx="16" cy="16" r="1.2" fill="currentColor"/>
+                <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <h1 class="masthead-title">Библиотека<br/>упражнений</h1>
+        <p class="masthead-sub" id="masthead-count">—</p>
+      </header>
+
+      <section class="filter-block">
+        <div class="players-switch" role="tablist" aria-label="Количество игроков">
+          <button class="players-btn" data-players="1" role="tab" aria-selected="true">
+            <span class="players-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+                <circle cx="12" cy="8" r="3.6"/>
+                <path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/>
+              </svg>
+            </span>
+            <span class="players-text">
+              <span class="players-num">1</span>
+              <span class="players-lbl">Соло</span>
+            </span>
+          </button>
+          <button class="players-btn" data-players="2" role="tab" aria-selected="false">
+            <span class="players-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+                <circle cx="8" cy="8" r="3.4"/>
+                <circle cx="17" cy="9" r="2.8"/>
+                <path d="M2 21c0-3.5 2.7-6.4 6-6.4s6 2.9 6 6.4"/>
+                <path d="M13.5 21c0-2.8 2.2-5.2 4.5-5.2s4 2.4 4 5.2"/>
+              </svg>
+            </span>
+            <span class="players-text">
+              <span class="players-num">2</span>
+              <span class="players-lbl">Пара</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="levels-row" role="tablist" aria-label="Уровень">
+          <button class="level-chip is-active" data-level="all">Все</button>
+          <button class="level-chip" data-level="E"><span class="lv lv-E">E</span>Новички</button>
+          <button class="level-chip" data-level="D"><span class="lv lv-D">D</span>Базовый</button>
+          <button class="level-chip" data-level="C"><span class="lv lv-C">C</span>Средний</button>
+          <button class="level-chip" data-level="B"><span class="lv lv-B">B</span>Продв.</button>
+          <button class="level-chip" data-level="A"><span class="lv lv-A">A</span>Топ</button>
+        </div>
+      </section>
+
+      <section class="drills-list" id="drills-list"></section>
+
+      <div class="empty" id="empty-state" hidden>
+        <div class="empty-art" aria-hidden="true">
+          <svg viewBox="0 0 80 80" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="10" y="10" width="60" height="60" rx="2"/>
+            <line x1="10" y1="36" x2="70" y2="36"/>
+            <line x1="40" y1="36" x2="40" y2="70"/>
+          </svg>
+        </div>
+        <p>Здесь пока пусто.<br/>Попробуй другой уровень.</p>
+      </div>
+
+      <footer class="foot">
+        <p>v1.1 · 24 упражнения · словарь · без сервера</p>
+      </footer>
+    </main>
+
+    <!-- DETAIL VIEW -->
+    <main id="view-detail" class="view view-detail" hidden>
+      <header class="detail-bar">
+        <button id="btn-back" class="icon-btn" aria-label="Назад">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 6l-6 6 6 6"/>
+          </svg>
+        </button>
+        <span class="detail-bar-title" id="detail-bar-title"></span>
+        <button id="btn-fav" class="icon-btn icon-btn--fav" aria-label="В избранное" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="detail-body" id="detail-body"></div>
+
+      <div class="detail-fab">
+        <button id="btn-timer" class="timer-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="13" r="8"/>
+            <path d="M12 9v4l2.5 2.5M9 2h6"/>
+          </svg>
+          <span id="timer-label">Запустить таймер</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- GLOSSARY VIEW -->
+    <main id="view-glossary" class="view view-glossary" hidden>
+      <header class="detail-bar">
+        <button id="btn-back-gloss" class="icon-btn" aria-label="Назад">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 6l-6 6 6 6"/>
+          </svg>
+        </button>
+        <span class="detail-bar-title">Словарь</span>
+        <span class="icon-btn" aria-hidden="true"></span>
+      </header>
+
+      <div class="gloss-body">
+        <section class="gloss-hero">
+          <div class="detail-kicker">
+            <span class="masthead-dot" aria-hidden="true" style="width:7px;height:7px;box-shadow:none"></span>
+            <span>Glossary</span>
+            <span>·</span>
+            <span id="gloss-count">—</span>
+          </div>
+          <h1 class="detail-title">Словарь<br/>терминов</h1>
+          <p class="gloss-hero-desc">Базовая лексика сквоша: удары, зоны корта, правила и тактические понятия. Всё, что встречается в упражнениях.</p>
+        </section>
+
+        <nav class="gloss-nav" id="gloss-nav"></nav>
+
+        <div class="gloss-categories" id="gloss-categories"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="court.js"></script>
+  <script src="drills.js"></script>
+  <script src="glossary.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

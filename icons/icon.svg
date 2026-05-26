@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="#14140F"/>
+
+  <!-- Court outline (top-down) -->
+  <g transform="translate(106 76)" stroke="#D9DB2A" stroke-width="6" fill="none" stroke-linecap="square">
+    <!-- court border -->
+    <rect x="0" y="0" width="300" height="360" rx="4"/>
+    <!-- short line -->
+    <line x1="0" y1="156" x2="300" y2="156"/>
+    <!-- half court line -->
+    <line x1="150" y1="156" x2="150" y2="360"/>
+    <!-- service boxes -->
+    <rect x="0" y="156" width="74" height="74"/>
+    <rect x="226" y="156" width="74" height="74"/>
+  </g>
+
+  <!-- Squash ball -->
+  <circle cx="256" cy="232" r="34" fill="#D9DB2A"/>
+  <!-- Ball highlight -->
+  <circle cx="244" cy="220" r="8" fill="#F5F66B" opacity="0.7"/>
+</svg>
