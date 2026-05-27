@@ -1,5 +1,5 @@
 // Squash Drills service worker — cache-first for shell, network-fallback
-const VERSION = 'sq-v1.4.0';
+const VERSION = 'sq-v1.5.0';
 const ASSETS = [
   './',
   'index.html',

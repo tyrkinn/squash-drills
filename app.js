@@ -54,6 +54,7 @@
   const $termRu     = document.getElementById('term-sheet-ru');
   const $termEn     = document.getElementById('term-sheet-en');
   const $termDef    = document.getElementById('term-sheet-def');
+  const $termVideo  = document.getElementById('term-sheet-video');
 
   // ---------- Storage helpers ----------
   function loadPref(key, fallback) {
@@ -249,6 +250,7 @@
             <span class="gloss-category-kicker">${escapeHtml(cat.kicker)}</span>
           </header>
           <p class="gloss-category-desc">${escapeHtml(cat.desc)}</p>
+          ${cat.link ? `<a class="gloss-category-link" href="${escapeHtml(cat.link.url)}" target="_blank" rel="noopener">${escapeHtml(cat.link.label)}</a>` : ''}
           <div class="gloss-list">
             ${items.map((it) => `
               <article class="gloss-item" id="term-${it.id}">
@@ -257,6 +259,7 @@
                   <span class="gloss-item-en">${escapeHtml(it.en)}</span>
                 </div>
                 <p class="gloss-item-def">${escapeHtml(it.def)}</p>
+                ${it.video ? `<a class="gloss-item-video" href="${escapeHtml(it.video)}" target="_blank" rel="noopener">▶ Видео: как бьётся</a>` : ''}
               </article>
             `).join('')}
           </div>
@@ -317,6 +320,14 @@
     $termRu.textContent = term.ru;
     $termEn.textContent = term.en;
     $termDef.textContent = term.def;
+    if (term.video) {
+      $termVideo.href = term.video;
+      $termVideo.hidden = false;
+      $termVideo.removeAttribute('hidden');
+    } else {
+      $termVideo.hidden = true;
+      $termVideo.setAttribute('hidden', '');
+    }
     $termSheet.hidden = false;
     $termSheet.removeAttribute('hidden');
     requestAnimationFrame(() => $termSheet.classList.add('is-open'));

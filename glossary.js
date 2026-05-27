@@ -9,6 +9,7 @@ const GLOSSARY = [
     ru: 'Драйв',
     en: 'Drive',
     def: 'Прямой удар вдоль боковой стены, цель которого — отправить мяч в длину, до задней четверти корта. Базовый удар сквоша и каркас почти любого розыгрыша.',
+    video: 'https://www.youtube.com/watch?v=K5haeIzWzmI',
   },
   {
     id: 'cross',
@@ -16,6 +17,7 @@ const GLOSSARY = [
     ru: 'Кросс',
     en: 'Cross-court',
     def: 'Удар по диагонали: мяч идёт в переднюю стену и отскакивает в противоположный задний угол. Хорошо исполненный кросс упирается в боковую стену перед задним углом.',
+    video: 'https://www.youtube.com/watch?v=2lm40_cmSIc',
   },
   {
     id: 'boast',
@@ -23,6 +25,7 @@ const GLOSSARY = [
     ru: 'Бэст',
     en: 'Boast',
     def: 'Удар, при котором мяч сначала ударяется о боковую стену, а затем уже летит в переднюю. Используется для атаки (быстрый перевод в передний угол) или для защиты из заднего угла.',
+    video: 'https://www.youtube.com/watch?v=XiF68Rddje4',
   },
   {
     id: 'drop',
@@ -30,6 +33,7 @@ const GLOSSARY = [
     ru: 'Дроп',
     en: 'Drop',
     def: 'Мягкий короткий удар в передний угол. Мяч должен «умереть» у передней стены и слабо отскочить, чтобы соперник не успел добежать.',
+    video: 'https://www.youtube.com/watch?v=NspDkaPD1lk',
   },
   {
     id: 'lob',
@@ -37,6 +41,7 @@ const GLOSSARY = [
     ru: 'Лоб',
     en: 'Lob',
     def: 'Высокий медленный удар по дуге, обычно кроссом. Используется, чтобы выиграть время и отправить соперника в задний угол.',
+    video: 'https://www.youtube.com/watch?v=7LnaBeKfQI4',
   },
   {
     id: 'volley',
@@ -44,6 +49,7 @@ const GLOSSARY = [
     ru: 'Волей',
     en: 'Volley',
     def: 'Приём мяча с лёта, не давая ему опуститься на пол. Сокращает время сопернику и помогает удерживать позицию на T.',
+    video: 'https://www.youtube.com/watch?v=n0Y99KTPLQ8',
   },
   {
     id: 'serve',
@@ -51,6 +57,7 @@ const GLOSSARY = [
     ru: 'Подача',
     en: 'Serve',
     def: 'Первый удар розыгрыша. Подающий стоит одной ногой в квадрате подачи и должен попасть в противоположную заднюю четверть корта.',
+    video: 'https://www.youtube.com/watch?v=l0rimH_eOJ8',
   },
   {
     id: 'nick',
@@ -58,6 +65,7 @@ const GLOSSARY = [
     ru: 'Никкер',
     en: 'Nick',
     def: 'Удар, попадающий в стык боковой стены и пола. Мяч после такого удара почти не отскакивает — фактически выигранное очко.',
+    video: 'https://www.youtube.com/results?search_query=squash+nick+shot+technique',
   },
   {
     id: 'kill',
@@ -65,6 +73,7 @@ const GLOSSARY = [
     ru: 'Кейл',
     en: 'Kill',
     def: 'Низкий мощный атакующий удар чуть выше тина. Цель — закончить розыгрыш быстро, не давая сопернику шансов на ответ.',
+    video: 'https://www.youtube.com/results?search_query=squash+kill+shot+technique',
   },
   {
     id: 'trickle-boast',
@@ -72,6 +81,7 @@ const GLOSSARY = [
     ru: 'Трикл-бэст',
     en: 'Trickle boast',
     def: 'Мягкий бэст из передней зоны корта. Неожиданная атака: вместо короткого дропа мяч уходит коротко в противоположный передний угол.',
+    video: 'https://www.youtube.com/results?search_query=squash+trickle+boast+technique',
   },
   {
     id: 'counter-drop',
@@ -79,6 +89,7 @@ const GLOSSARY = [
     ru: 'Контр-дроп',
     en: 'Counter-drop',
     def: 'Короткий ответ дропом на чужой дроп. Часто играется по той же стене, по которой пришёл мяч.',
+    video: 'https://www.youtube.com/results?search_query=squash+counter+drop+shot',
   },
   {
     id: 'reverse-boast',
@@ -86,6 +97,7 @@ const GLOSSARY = [
     ru: 'Реверс-бэст',
     en: 'Reverse boast',
     def: 'Бэст в противоположную сторону: например, форхендом через левую боковую стену. Сложный и эффектный, но рискованный.',
+    video: 'https://www.youtube.com/watch?v=JIx05CsI3S8',
   },
 
   // ============== ПОЗИЦИИ И ЗОНЫ ==============
@@ -275,7 +287,11 @@ const GLOSSARY_CATEGORIES = [
     id: 'shots',
     label: 'Удары',
     kicker: 'Shots',
-    desc: 'Основные удары, из которых состоит любая игра.',
+    desc: 'Основные удары, из которых состоит любая игра. У каждого — ссылка на видео с техникой.',
+    link: {
+      url: 'https://www.youtube.com/playlist?list=PLyCCwp6OFekhVl5MsD4ksp6LFp74vkybv',
+      label: '▶ Плейлист для новичков «Zero to Hero»',
+    },
   },
   {
     id: 'positions',
